@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Rania Store hahahaha</title>
+    <title>Rania Store</title>
     <link href="<?php echo base_url()."assets/css/bootstrap.min.css"?>" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url()."assets/css/font-awesome.min.css"?>" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url()."assets/css/prettyPhoto.css"?>" rel="stylesheet" type="text/css">
@@ -108,7 +108,6 @@
 						<ol class="carousel-indicators">
 							<li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
 							<li data-target="#slider-carousel" data-slide-to="1"></li>
-							<li data-target="#slider-carousel" data-slide-to="2"></li>
 						</ol>
 						
 						<div class="carousel-inner">
@@ -207,33 +206,15 @@
 									</div>
 								<?php } ?>
 								</div>
-
-								<div class="item active">	
-								<?php foreach ($produkBest as $x) { ?>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="<?php echo base_url()."uploads/".$x['gambar']?>" alt="" />
-													<h2><?= $x['nama_produk'] ?></h2>
-													<p><?= $x['harga_produk'] ?></p>
-													<a href="<?php echo site_url().'/welcome/viewDetailIDBest/'.$x['id_produk'] ?>" class="btn btn-default add-to-cart"><i class="fa fa-eye"></i>View Detail</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								<?php } ?>
-								</div>
-
 							</div>
 								
-
+<!-- 
 							 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
 								<i class="fa fa-angle-left"></i>
 							  </a>
 							  <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
 								<i class="fa fa-angle-right"></i>
-							  </a>			
+							  </a> -->			
 						</div>
 					</div><!--/recommended_items-->	
 				</div>
@@ -321,7 +302,7 @@
 		<div class="footer-bottom">
 			<div class="container">
 				<div class="row">
-					<p class="pull-left">Copyright © 2017 Rania Store </p>
+					<p class="pull-left">Copyright &copy; 2017 Rania Store </p>
 				</div>
 			</div>
 		</div>

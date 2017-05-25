@@ -37,7 +37,7 @@ class Admin extends CI_Controller {
 
 	public function editStatusAkun($username){
 		if($this->session->userdata('isLogin')){
-			$this->load->library('email');
+			//$this->load->library('email');
 			$statusAkun = $this->mymodel->getStatus($username);
 			$statusAkhir = $this->input->post('editStatus');
 			$update = $this->mymodel->updateStatus($username, $statusAkhir);
@@ -124,8 +124,17 @@ class Admin extends CI_Controller {
 					echo "<script>alert('Data produk berhasil di simpan.')</script>";
 					$this->readProduk();
 					//redirect('produk_hijab');
-				} else {
-					echo "gagal insert";
+				} else if(!$isUpload){
+					$data = array(
+						'id_produk' => $this->input->post('id_produk'),
+						'nama_produk' 	=> $this->input->post('nama_produk'),
+						'merk_produk' 	=> $this->input->post('merk_produk'),
+						'kategori_produk'	=> $this->input->post('kategori_produk'),
+						'harga_produk'	=> $this->input->post('harga_produk'),
+					);
+					$this->mymodel->addDataProduk($data);
+					$this->session->set_flashdata('alert',"<script>alert('Data produk berhasil di simpan.')</script>");
+					$this->readProduk();
 				}
 			} else {
 				$this->load->view('a-formCreateProduk');
@@ -266,8 +275,6 @@ class Admin extends CI_Controller {
 				if($this->upload->do_upload('gambar')){
 					$fileUpload = $this->upload->data();
 					$isUpload = TRUE;
-				} else {
-					echo $this->upload->display_errors('<p>', '</p>');
 				}
 
 				if($isUpload){
@@ -282,6 +289,17 @@ class Admin extends CI_Controller {
 					$this->mymodel->addDataProdukBest($data);
 					echo "<script>alert('Data produk berhasil di simpan.')</script>";
 					$this->readProdukBest();
+				} else if(!$isUpload){
+					$data = array(
+						'id_produk' => $this->input->post('id_produk'),
+						'nama_produk' 	=> $this->input->post('nama_produk'),
+						'merk_produk' 	=> $this->input->post('merk_produk'),
+						'kategori_produk'	=> $this->input->post('kategori_produk'),
+						'harga_produk'	=> $this->input->post('harga_produk'),
+					);
+					$this->mymodel->addDataProdukBest($data);
+					$this->session->set_flashdata('alert',"<script>alert('Data produk berhasil di simpan.')</script>");
+					redirect('Admin/readProdukBest/');
 				} else {
 					echo "gagal insert";
 				}
@@ -311,6 +329,7 @@ class Admin extends CI_Controller {
 	}
 
 	public function updateDataProdukBest($id_produk){
+
 		if($this->session->userdata('isLogin')){
 			$this->load->helper('form');
 			$this->load->library('form_validation');
@@ -318,39 +337,47 @@ class Admin extends CI_Controller {
 
 			$is_submit = $this->input->post('is_submit');
 
-			if (isset($is_submit) && $is_submit == 1) {
-				$data = array(
-					'id_produk' => $this->input->post('id_produk'),
-					'nama_produk' 	=> $this->input->post('nama_produk'),
-					'merk_produk' 	=> $this->input->post('merk_produk'),
-					'kategori_produk'	=> $this->input->post('kategori_produk'),
-					'harga_produk'	=> $this->input->post('harga_produk'),
+			if (isset($is_submit) && $is_submit == 1 ) {
+				$fileUpload = array(); //variabel buat nampung file
+				$isUpload = FALSE;
+				$config = array(
+					'upload_path' => './uploads/',
+					'allowed_types' => 'jpg|jpeg|png',
+					'max_size' => 1024
 				);
+				$this->upload->initialize($config);
 
-				if(isset($_POST['gambar'])){
-					$fileUpload = array(); //variabel buat nampung file
-					//konfigurasi file yg boleh diupload dan lokasi penyimpanan file yg diupload
-					$config = array(
-						'upload_path' => './uploads/',
-						'allowed_types' => 'jpg|jpeg|png',
-						'max_size' => 1024
-					);
-					$this->upload->initialize($config);
-
-					if($this->upload->do_upload('gambar')){
-						$fileUpload = $this->upload->data();
-						$data['gambar'] = $fileUpload['file_name'];
-					} else {
-						$this->session->set_flashdata('alert',"<script>alert('Gagal update.Pilih file gambar!')</script>");
-						redirect('Admin/readProdukIDBest/' .$this->input->post('id_produk'));
-					}
+				if($this->upload->do_upload('gambar')){
+					$fileUpload = $this->upload->data();
+					$isUpload = TRUE;
 				}
 
-				$this->mymodel->updateProdukBest($id_produk, $data);
-				$this->session->set_flashdata('alert',"<script>alert('Data produk berhasil di simpan.')</script>");
-				redirect('Admin/readProdukBest/');
-			} else {
-				redirect('Admin/readProdukBest/');
+				if($isUpload){
+					$data = array(
+						'id_produk' => $this->input->post('id_produk'),
+						'nama_produk' 	=> $this->input->post('nama_produk'),
+						'merk_produk' 	=> $this->input->post('merk_produk'),
+						'kategori_produk'	=> $this->input->post('kategori_produk'),
+						'harga_produk'	=> $this->input->post('harga_produk'),
+						'gambar' => $fileUpload['file_name']
+					);
+					$this->mymodel->updateProdukBest($id_produk, $data);
+					$this->session->set_flashdata('alert',"<script>alert('Data produk berhasil di simpan.')</script>");
+					redirect('Admin/readProdukBest/');
+				} else if(!$isUpload){
+					$data = array(
+						'id_produk' => $this->input->post('id_produk'),
+						'nama_produk' 	=> $this->input->post('nama_produk'),
+						'merk_produk' 	=> $this->input->post('merk_produk'),
+						'kategori_produk'	=> $this->input->post('kategori_produk'),
+						'harga_produk'	=> $this->input->post('harga_produk'),
+					);
+					$this->mymodel->updateProdukBest($id_produk, $data);
+					$this->session->set_flashdata('alert',"<script>alert('Data produk berhasil di simpan.')</script>");
+					redirect('Admin/readProdukBest/');
+				} else {
+					redirect('Admin/produkBest/');
+				}
 			}
 		} else {
 			redirect('welcome/login');

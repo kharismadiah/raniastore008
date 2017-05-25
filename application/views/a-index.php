@@ -196,8 +196,11 @@
                         </div>
                     </div>
                 </div>
-    <!-- End Wrapper
-    </div> -->
+                <footer class="footer text-center"> 2017 &copy; Rania Store</footer>
+            </section>
+        </div>
+    <!-- End Wrapper -->
+    </div>
 
     <!-- All Jquery -->
     <script src="<?php echo base_url()."admin/plugins/bower_components/jquery/dist/jquery.min.js"?>"></script>

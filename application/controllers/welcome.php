@@ -56,7 +56,6 @@ class Welcome extends CI_Controller {
 		$this->load->view('product-details', $data);
 	}
 
-
 	public function blog_list(){
 		$this->load->view('blog');
 	}
@@ -93,8 +92,6 @@ class Welcome extends CI_Controller {
 			if($this->upload->do_upload('gambar')){
 				$fileUpload = $this->upload->data();
 				$isUpload = TRUE;
-			} else {
-				echo $this->upload->display_errors('<p>', '</p>');
 			}
 
 			if($isUpload){
@@ -109,6 +106,16 @@ class Welcome extends CI_Controller {
 				echo "<script>alert('Selamat! Anda telah berhasil membuat akun. Silahkan login untuk masuk ke akun Anda.')</script>";
 				$this->index();
 				//redirect('produk_hijab');
+			} else if(!$isUpload){
+				$data = array(
+					'username' 	=> $this->input->post('username'),
+					'email' 	=> $this->input->post('email'),
+					'password' 	=> $this->input->post('password'),
+					'phone'		=> $this->input->post('phone')
+				);
+				$this->mymodel->addDataAkun($data);
+				echo "<script>alert('Selamat! Anda telah berhasil membuat akun. Silahkan login untuk masuk ke akun Anda.')</script>";
+				$this->index();
 			} else {
 				echo "gagal insert";
 			}

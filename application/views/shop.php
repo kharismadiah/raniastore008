@@ -84,13 +84,7 @@
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
 								<li><a href="<?php echo site_url()."/welcome/index/"?>">Home</a></li>
-								<li><a href="" class="active">Products</a></li>
-								<!-- <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="" class="active">Products</a></li>
-										<!-- <li><a href="<?php echo site_url()."/welcome/product_details/"?>">Product Details</a></li>
-                                    </ul>
-                                </li> -->  
+								<li><a href="" class="active">Products</a></li> 
 								<li><a href="<?php echo site_url()."/welcome/contact_us/"?>">Contact</a></li>
 							</ul>
 						</div>
